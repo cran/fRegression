@@ -6,7 +6,7 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
 # You should have received a copy of the GNU Library General
@@ -15,38 +15,37 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port:
+# for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
+#  Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#  info@rmetrics.org
+#  www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
+#  see R's copyright and license files
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
-#   see Rmetrics's copyright file
+#  see Rmetrics's copyright file
 
 
 ################################################################################
 
 
-.First.lib =
-function(lib, pkg)
-{
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-    }
-
-    # Load dll:
-    library.dynam("fRegression", pkg, lib)
+test.Fit <- 
+    function()
+{   
+    # Simulate Artificial LM:
+    x = as.timeSeries(data(LPP2005REC))
+    
+    # Fit Parameters:
+    lmfit = regFit(LPP40 ~ 0 + SPI + SBI + SII + LMI + MPI + ALT, 
+        data = x, use = "lm") 
+    
+    # 
+    print(lmfit)
+ 
+    # Return Value:
+    return()
 }
-
-
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
 
 
 ################################################################################

@@ -15,9 +15,10 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port:
+# for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -27,26 +28,31 @@
 
 
 ################################################################################
+# FUNCTION:             DESCRIPTION REGRESSION METHODS:
+#  formula.fREG          Returns formula from a fitted regression model
+################################################################################
 
-
-.First.lib =
-function(lib, pkg)
-{
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-    }
-
-    # Load dll:
-    library.dynam("fRegression", pkg, lib)
-}
-
-
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
+        
+setMethod(f = "formula", signature(x = "fREG"), definition = 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:  
+    #   Extracts 'fREG' Model Formula
+    
+    # Arguments:
+    #   object - an object of class fREG as returned by the function
+    #       regFit
+    
+    # FUNCTION:
+    
+    # Formula:
+    ans = slot(x, "formula") 
+    
+    # Return Value:
+    ans
+})
 
 
 ################################################################################

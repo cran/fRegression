@@ -15,9 +15,10 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port:
+# for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -27,27 +28,27 @@
 
 
 ################################################################################
+# FUNCTION:               DESCRIPTION:
+#  'fREG'                  fREG Class representation
+################################################################################
 
 
-.First.lib =
-function(lib, pkg)
-{
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-    }
-
-    # Load dll:
-    library.dynam("fRegression", pkg, lib)
-}
-
-
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
-
+setClass("fREG", 
+    # Class Representation
+    representation(
+        call = "call",
+        formula = "formula",
+        family = "character",  
+        method = "character",
+        data = "list",
+        fit = "list",
+        residuals = "numeric",
+        fitted = "numeric",
+        title = "character",
+        description = "character"
+    )  
+)
+      
 
 ################################################################################
 

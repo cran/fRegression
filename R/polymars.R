@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -29,36 +29,52 @@
 
 ################################################################################
 # INTERFACE:            FROM POLSPLINE - POLYMARS DESCRIPTION:
-#  .polymars
-#  .polymars.default     Internal Function
-#  .predict.polymars     Internal Function
+#  .polymars             Polymars regress from package polspline
+#  .polymars.default     Default wrapper for polymars()
+#  .predict.polymars     Formula wrapper for polymars()
+#  .predict.polymars     Predict from a polymars model
 ################################################################################
 
 
-.polymars =
-function(formula, data, ...)
-{   # A function implemented by Diethelm Wuertz
+# Note:
+    # Introduce no .polymars = function() UseMethod()
+    #   this fails regFit(..., use = "polymars)
+    
+    
+# ------------------------------------------------------------------------------
+
+ 
+.polymarsFormula <- 
+    function(formula, data, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
-    
+      
     # Extract Model Data:
     mf = match.call(expand.dots = FALSE)
-    m = match(c("formula", "data"), names(mf), 0)
-    mf = mf[c(1, m)]
+    m = match(c("formula", "data"), names(mf), 0L)
+    mf = mf[c(1L, m)]
     mf$drop.unused.levels <- TRUE
-    mf[[1]] <- as.name("model.frame")
-    Data = eval(mf, parent.frame())
-    y = Data[, 1]
-    x = Data[, -1]
+    mf[[1L]] <- as.name("model.frame")
+    mf = eval(mf, parent.frame())
+    mt <- attr(mf, "terms")
+    y <- model.response(mf, "numeric")
+    x <- model.matrix(mt, mf)
     
+    # Rempove Intercept from x if exists ...
+    M = which(colnames(x) == "(Intercept)")
+    if (length(M) > 0) X = x[ ,-M]
+  
     # Fit:
-    fit = .polymars.default(responses = y, predictors = x, ...) 
+    fit = .polymarsDefault(responses = y, predictors = X, ...) 
     
     # Add to fit:
-    fit$fitted.values = fit$fitted
-    fit$terms = terms(formula)
-    fit$Model = fit$model
-    fit$model = Data
+    #   ... '$coef' keeps model
+    fit$model = mf
+    fit$terms = mt
+       
+    # Class:
     class(fit) = "polymars"
     
     # Return Value:
@@ -69,11 +85,12 @@ function(formula, data, ...)
 # ------------------------------------------------------------------------------
 
 
-.polymars.default = 
-function(responses, predictors, maxsize, gcv = 4, additive = FALSE, 
-startmodel, weights, no.interact, knots, knot.space = 3, ts.resp, ts.pred, 
-ts.weights, classify, factors, tolerance = 1e-06, verbose = FALSE) 
-{   # A function implemented by Diethelm Wuertz
+.polymarsDefault <-  
+    function(responses, predictors, maxsize, gcv = 4, additive = FALSE, 
+    startmodel, weights, no.interact, knots, knot.space = 3, ts.resp, ts.pred, 
+    ts.weights, classify, factors, tolerance = 1e-06, verbose = FALSE) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Arguments:
     #  responses - a vector (or matrix) of responses. (Can be a a vector of 
@@ -116,10 +133,18 @@ ts.weights, classify, factors, tolerance = 1e-06, verbose = FALSE)
     
     # require(polspline)
     
+    print(head(responses))
+    print(head(predictors))
+    
     # Fit:
     .Call <- match.call()
     .Call[[1]] <- as.name("polymars")
     ans = eval(.Call, parent.frame())
+    
+    # Add Coefficients Parameters:
+    ans$coef = ans$model
+    ans$parameters = ans$coef
+    ans$fitted.values = ans$fitted
     
     # Return Value:
     ans
@@ -129,32 +154,45 @@ ts.weights, classify, factors, tolerance = 1e-06, verbose = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.predict.polymars =
-function(object, newdata, se.fit = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
+.predict.polymars <- 
+    function(object, newdata, se.fit = FALSE, type = "response", ...)
+{   
+    # Note:
+    #   newdata is a predictor data.frame, if missing the fitted 
+    #   vector will be returned.
+    
+    # Example:
+    #   x=LM3(); object1 = regFit(Y ~ X1+X2+X3, data = x, use = "polymars")@fit
+    #   .predict.polymars(object, newdata = x[, -1])
+    
     # FUNCTION:
     
-    # Predict:
+    # Restore Object Model:
+    object$model = object$coef
+    class(object) = "polymars"
+    
+    # Polymars requires 1-column matrices:
+    object$residuals = matrix(object$residuals)
+    object$fitted = matrix(object$fitted)
+    
+    # Here, object is expected to be the slot @fit of an object of class 'fREG'
     if (missing(newdata)) {
         y = as.vector(object$fitted)
     } else {
-        object$model = object$Model
-        tt = terms(object)
+        tt = object$terms
         Terms = delete.response(tt)
         modelFrame = model.frame(Terms, newdata)
-        x = model.matrix(Terms, modelFrame)[, -1]
-        class(object) = "polymars"
-        y = as.vector(predict(object, x = x, ...))
-        names(y) = rownames(newdata)
+        X = model.matrix(Terms, modelFrame)[, -1]
+        Y = polspline::predict.polymars(object, x = X, ...)
     }
     
-    # Add optionally standard errors:
-    if (se.fit) y = list(fit = y, se.fit = NA*y)
+    # Add optionally standard errors - NA's not available yet ...
+    if (se.fit) Y = list(fit = Y, se.fit = NA*Y)
    
     # Return Value:
-    y
+    Y
 }
 
 
 ################################################################################
+

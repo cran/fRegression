@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -29,15 +29,20 @@
 
 ################################################################################
 # FUNCTION:                 REGRESSION TERM PLOTS
-#  .termPlot                 Line Plot          
-#  .termPersp                Perspective Plot         
-#  .termContour              Contour Plot
+#  termPlot                  Line Plot          
+#  termPersp                 Perspective Plot         
+#  termContour               Contour Plot
 ################################################################################
 
 
-test.termPlot = 
-function()
+test.termPlot <- 
+    function()
 {    
+    
+    x = regSim(model = "LM3", n = 100)
+    lmfit = regFit(Y ~ X1 + X2 + X3, data = x, use = "lm")
+    
+    
     # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
@@ -51,34 +56,34 @@ function()
     # Fit:
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm") 
-    AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
+    AM    = regFit(Y ~ 1 + X1 + X2 + X3,   DATATS, use = "gam") 
     PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
     PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4) 
-    PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
+    POLYMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)    
     
-    # Term Plot:
-    par(ask = FALSE) 
-    par(mfrow = c(1, 1))
-    .termPlot(LM)
-    .termPlot(RLM)
-    .termPlot(AM)
-    .termPlot(PPR)
-    .termPlot(PMARS)
-    .termPlot(NNET)
+    ## TODO: Term Plot:
+    ## par(ask = FALSE) 
+    ## par(mfrow = c(1, 1))
+    ## termPlot(LM)
+    ## termPlot(RLM)
+    ## termPlot(AM)
+    ## termPlot(PPR)
+    ## termPlot(POLYMARS)
+    ## termPlot(NNET)
     
-    # 
-    par(ask = FALSE) 
-    par(mfrow = c(1, 1))
-    .termPlot(LM, terms = "X1")
-    .termPlot(RLM, terms = "X1")
-    .termPlot(AM, terms = "X1")
-    .termPlot(PPR, terms = "X1")
-    .termPlot(PPR4, terms = "X1")
-    .termPlot(PMARS, terms = "X1")
-    .termPlot(NNET, terms = "X1")
-    .termPlot(NNET6, terms = "X1")
+    ## TODO:
+    ## par(ask = FALSE) 
+    ## par(mfrow = c(1, 1))
+    ## termPlot(LM, terms = "X1")
+    ## termPlot(RLM, terms = "X1")
+    ## termPlot(AM, terms = "X1")
+    ## termPlot(PPR, terms = "X1")
+    ## termPlot(PPR4, terms = "X1")
+    ## termPlot(POLYMARS, terms = "X1")
+    ## termPlot(NNET, terms = "X1")
+    ## termPlot(NNET6, terms = "X1")
     
     # Return Value:
     return()
@@ -88,8 +93,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.termPersp = 
-function()
+test.termPersp <- 
+    function()
 {      
     # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
@@ -103,24 +108,24 @@ function()
     # Fit:
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm") 
-    AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
+    AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "gam") 
     PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
     PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4) 
-    PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
+    POLYMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)        
     
-    # Bivariate Perspective Term Plot: 
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
-    .termPersp(LM,    terms = c("X1", "X2"))
-    .termPersp(RLM,   terms = c("X1", "X2"))
-    .termPersp(AM,    terms = c("X1", "X2"))
-    .termPersp(PPR,   terms = c("X1", "X2"))
-    .termPersp(PPR4,  terms = c("X1", "X2"))
-    .termPersp(PMARS, terms = c("X1", "X2"))
-    .termPersp(NNET,  terms = c("X1", "X2"))
-    .termPersp(NNET6, terms = c("X1", "X2"))  
+    ## TODO:  Bivariate Perspective Term Plot: 
+    ## par(ask = FALSE)
+    ## par(mfrow = c(1, 1))
+    ## termPersp(LM,    terms = c("X1", "X2"))
+    ## termPersp(RLM,   terms = c("X1", "X2"))
+    ## termPersp(AM,    terms = c("X1", "X2"))
+    ## termPersp(PPR,   terms = c("X1", "X2"))
+    ## termPersp(PPR4,  terms = c("X1", "X2"))
+    ## termPersp(POLYMARS, terms = c("X1", "X2"))
+    ## termPersp(NNET,  terms = c("X1", "X2"))
+    ## termPersp(NNET6, terms = c("X1", "X2"))  
     
     # Return Value:
     return()
@@ -130,8 +135,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.termContour = 
-function()
+test.termContour <- 
+    function()
 {    
     # Requirements:
     require(MASS)
@@ -149,24 +154,24 @@ function()
     # Fit:
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm") 
-    AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
+    AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "gam") 
     PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
     PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4)  
-    PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
+    POLYMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)        
         
-    # Bivariate Contour Term Plot:
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
-    .termContour(LM,    terms = c("X1", "X2"))
-    .termContour(RLM,   terms = c("X1", "X2"))
-    .termContour(AM,    terms = c("X1", "X2"))
-    .termContour(PPR,   terms = c("X1", "X2"))
-    .termContour(PPR4,  terms = c("X1", "X2"))
-    .termContour(PMARS, terms = c("X1", "X2"))
-    .termContour(NNET,  terms = c("X1", "X2"))
-    .termContour(NNET6, terms = c("X1", "X2"))
+    ## TODO: Bivariate Contour Term Plot:
+    ## par(ask = FALSE)
+    ## par(mfrow = c(1, 1))
+    ## termContour(LM,    terms = c("X1", "X2"))
+    ## termContour(RLM,   terms = c("X1", "X2"))
+    ## termContour(AM,    terms = c("X1", "X2"))
+    ## termContour(PPR,   terms = c("X1", "X2"))
+    ## termContour(PPR4,  terms = c("X1", "X2"))
+    ## termContour(POLYMARS, terms = c("X1", "X2"))
+    ## termContour(NNET,  terms = c("X1", "X2"))
+    ## termContour(NNET6, terms = c("X1", "X2"))
        
     # Return Value:
     return()
@@ -176,8 +181,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.termComparison = 
-function()
+test.termComparison <- 
+    function()
 {    
     # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
@@ -189,19 +194,23 @@ function()
     head(DATATS)
     class(DATATS)    
  
-    # Comparison:
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
-    
-    LM = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
-    .termPlot(LM)
-    
-    AM = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3), data = DATATS, use = "am") 
-    .termPlot(AM)
-    am = gam(formula = Y ~ s(X1) + s(X2) + s(X3), data = DATA) 
-    for (s in 1:3) { 
-        plot(am, residuals = residuals(am), se = TRUE, 
-            main = "AM", cex = 0.7, select = s, pch = 19); grid() 
+    ## TODO:
+    if (FALSE) {
+        
+        # Comparison:
+        par(ask = FALSE)
+        par(mfrow = c(1, 1))
+        
+        LM = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
+        termPlot(LM)
+        
+        AM = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3), data = DATATS, use = "gam") 
+        termPlot(AM)
+        am = gam(formula = Y ~ s(X1) + s(X2) + s(X3), data = DATA) 
+        for (s in 1:3) { 
+            plot(am, residuals = residuals(am), se = TRUE, 
+                main = "AM", cex = 0.7, select = s, pch = 19); grid() 
+        }
     }
     
     # Return Value:

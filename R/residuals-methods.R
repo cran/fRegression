@@ -18,6 +18,7 @@
 # for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -27,26 +28,43 @@
 
 
 ################################################################################
+# FUNCTION:             DESCRIPTION REGRESSION METHODS:
+#  residuals.fREG        Residuals method for an object of class 'fREG'
+################################################################################
 
 
-.First.lib =
-function(lib, pkg)
+setMethod(f = "residuals", signature(object = "fREG"), definition =
+    function(object)
 {
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   residuals values method for an object of class fREG
+
+    # FUNCTION:
+
+    # residuals Values:
+    residuals = object@residuals
+
+    # Get original time series class:
+    data = object@data$data
+    dataClass = class(data)[1]
+
+    # Transform:
+    if (dataClass == "timeSeries") {
+        ans = data
+        data.mat = matrix(residuals)
+        rownames(data.mat) = rownames(data)
+        colnames(data.mat) = object@data$unit
+        series(ans) = data.mat
+        colnames(ans) = as.character(object@formula[2])
+    } else {
+        ans = data
     }
 
-    # Load dll:
-    library.dynam("fRegression", pkg, lib)
-}
-
-
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
+    # Return Value:
+    ans
+})
 
 
 ################################################################################
