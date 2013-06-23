@@ -1,7 +1,7 @@
 Package: fRegression
-Version: 2160.77
-Revision: 5427
-Date: 2012-12-10
+Version: 3010.78
+Revision: 5525
+Date: 2013-06-23
 Title: Regression Based Decision and Prediction
 Author: Diethelm Wuertz (for the Rmetrics port), R core team (for lm()
         from R's base and nnet() from nnet package); B.R. Ripley (for
@@ -24,6 +24,7 @@ Note: Several parts are still preliminary and may be changed in the
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org
-Packaged: 2012-12-10 16:53:34 UTC; yankee
+Packaged: 2013-06-23 18:22:12 UTC; yohan
+NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2012-12-10 18:19:12
+Date/Publication: 2013-06-24 01:57:09
