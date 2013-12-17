@@ -14,22 +14,10 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # INTERFACE:            FROM POLSPLINE - POLYMARS DESCRIPTION:
-#  .polymars             Polymars regress from package polspline
+#  .polymarsFormula      Polymars regress from package polspline
 #  .polymars.default     Default wrapper for polymars()
 #  .predict.polymars     Formula wrapper for polymars()
 #  .predict.polymars     Predict from a polymars model
@@ -44,7 +32,7 @@
 # ------------------------------------------------------------------------------
 
 
-.polymarsFormula <-
+.polymarsFormula <- 
     function(formula, data, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -52,30 +40,30 @@
     # FUNCTION:
 
     # Extract Model Data:
-    mf = match.call(expand.dots = FALSE)
-    m = match(c("formula", "data"), names(mf), 0L)
-    mf = mf[c(1L, m)]
+    mf <- match.call(expand.dots = FALSE)
+    m <- match(c("formula", "data"), names(mf), 0L)
+    mf <- mf[c(1L, m)]
     mf$drop.unused.levels <- TRUE
     mf[[1L]] <- quote(stats::model.frame)
-    mf = eval(mf, parent.frame())
+    mf <- eval(mf, parent.frame())
     mt <- attr(mf, "terms")
     y <- model.response(mf, "numeric")
     x <- model.matrix(mt, mf)
 
     # Rempove Intercept from x if exists ...
-    M = which(colnames(x) == "(Intercept)")
-    if (length(M) > 0) X = x[ ,-M]
+    M <- which(colnames(x) == "(Intercept)")
+    if (length(M) > 0) X <- x[ ,-M]
 
     # Fit:
-    fit = .polymarsDefault(responses = y, predictors = X, ...)
+    fit <- .polymarsDefault(responses = y, predictors = X, ...)
 
     # Add to fit:
     #   ... '$coef' keeps model
-    fit$model = mf
-    fit$terms = mt
+    fit$model <- mf
+    fit$terms <- mt
 
     # Class:
-    class(fit) = "polymars"
+    class(fit) <- "polymars"
 
     # Return Value:
     fit
@@ -139,12 +127,12 @@
     # Fit:
     .Call <- match.call()
     .Call[[1]] <- quote(polspline::polymars)
-    ans = eval(.Call, parent.frame())
+    ans <- eval(.Call, parent.frame())
 
     # Add Coefficients Parameters:
-    ans$coef = ans$model
-    ans$parameters = ans$coef
-    ans$fitted.values = ans$fitted
+    ans$coef <- ans$model
+    ans$parameters <- ans$coef
+    ans$fitted.values <- ans$fitted
 
     # Return Value:
     ans
@@ -168,26 +156,26 @@
     # FUNCTION:
 
     # Restore Object Model:
-    object$model = object$coef
-    class(object) = "polymars"
+    object$model <- object$coef
+    class(object) <- "polymars"
 
     # Polymars requires 1-column matrices:
-    object$residuals = matrix(object$residuals)
-    object$fitted = matrix(object$fitted)
+    object$residuals <- matrix(object$residuals)
+    object$fitted <- matrix(object$fitted)
 
     # Here, object is expected to be the slot @fit of an object of class 'fREG'
     if (missing(newdata)) {
-        y = as.vector(object$fitted)
+        y <- as.vector(object$fitted)
     } else {
-        tt = object$terms
-        Terms = delete.response(tt)
-        modelFrame = model.frame(Terms, newdata)
-        X = model.matrix(Terms, modelFrame)[, -1]
-        Y = polspline::predict.polymars(object, x = X, ...)
+        tt <- object$terms
+        Terms <- delete.response(tt)
+        modelFrame <- model.frame(Terms, newdata)
+        X <- model.matrix(Terms, modelFrame)[, -1]
+        Y <- polspline::predict.polymars(object, x = X, ...)
     }
 
     # Add optionally standard errors - NA's not available yet ...
-    if (se.fit) Y = list(fit = Y, se.fit = NA*Y)
+    if (se.fit) Y <- list(fit = Y, se.fit = NA*Y)
 
     # Return Value:
     Y
@@ -195,3 +183,5 @@
 
 
 ################################################################################
+
+

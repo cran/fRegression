@@ -14,18 +14,6 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA. 
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                   REGRESSION TERM PLOTS:
@@ -35,7 +23,7 @@
 ################################################################################
 
 
-.fittedPlot = 
+.fittedPlot <- 
     function(object, which = NULL)
 {
     # A function implemented by Diethelm Wuertz
@@ -122,7 +110,7 @@
 
 .fittedContour <- 
     function(object)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -133,7 +121,7 @@
     # FUNCTION:
     
     # Settings:
-    model = object@fit$model
+    model <- object@fit$model
     responseName = colnames(model)[attr(terms(object), "response")]
     model.mat = as.matrix(object@fit$model)[,-attr(terms(object), "response")]
     N = NCOL(model.mat)
@@ -159,7 +147,8 @@
     }
 
 }
-    
+
 
 ################################################################################    
-    
+
+

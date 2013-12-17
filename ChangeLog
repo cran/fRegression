@@ -1,14 +1,13 @@
-2014-01-02  chalabi
+2014-09-16  setz
 
-	* DESCRIPTION, NAMESPACE, R/polymars.R,
-	  inst/unitTests/runit.RegressionModelling.R,
-	  inst/unitTests/runit.TermPlots.R: Using quote instead of as.name
-	  when calling polymars().
-
-2013-12-17  chalabi
-
-	* ChangeLog, DESCRIPTION, NAMESPACE: updated DESC and ChangeLog
-	* DESCRIPTION: updated DESC
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESCRIPTION files
+	  after submission to CRAN
+	* NAMESPACE: Updated NAMESPACE; functions with a dot in front are no longer
+	  exported.
+	* R/regFit.R: No execution in parent frame anymore
+	* Unit Tests: Functions with a dot in front are called using
+	  fRegression:::.f
+	* src moved to inst/obsolete/src
 
 2013-12-10  chalabi
 

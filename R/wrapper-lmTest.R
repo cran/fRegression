@@ -14,18 +14,6 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 TIME SERIES TESTS
@@ -38,6 +26,8 @@
 #   hmcTest                  Harrison-McCabe Test
 #   rainTest                 Rainbow Test
 #   resetTest                Ramsey's RESET Test
+# REQUIRES:
+# lmtest
 ################################################################################
 
 
@@ -71,39 +61,39 @@ lmTest <-
     #   require(lmtest)
 
     # Settings:
-    method = match.arg(method)
+    method <- match.arg(method)
 
     # DW:
     if (method == "dw")
-        ans = lmtest::dwtest(formula = formula, data = data, ...)
+        ans <- lmtest::dwtest(formula = formula, data = data, ...)
 
     # BP:
     if (method == "bp")
-        ans = lmtest::bptest(formula = formula, data = data, ...)
+        ans <- lmtest::bptest(formula = formula, data = data, ...)
 
     # GQ:
     if (method == "gq")
-        ans = lmtest::gqtest(formula = formula, data = data, ...)
+        ans <- lmtest::gqtest(formula = formula, data = data, ...)
 
     # HMC:
     if (method == "hmc")
-        ans = lmtest::hmctest(formula = formula, data = data, ...)
+        ans <- lmtest::hmctest(formula = formula, data = data, ...)
 
     # HARV:
     if (method == "harv")
-        ans = lmtest::harvtest(formula = formula, data = data, ...)
+        ans <- lmtest::harvtest(formula = formula, data = data, ...)
 
     # RAIN:
     if (method == "rain")
-        ans = lmtest::raintest(formula = formula, data = data, ...)
+        ans <- lmtest::raintest(formula = formula, data = data, ...)
 
     # RESET:
     if (method == "reset")
-        ans = lmtest::reset(formula = formula, data = data, ...)
+        ans <- lmtest::reset(formula = formula, data = data, ...)
 
     # BG:
     if (method == "bg")
-        ans = lmtest::bgtest(formula = formula, data = data, ...)
+        ans <- lmtest::bgtest(formula = formula, data = data, ...)
 
     # Return Result:
     ans

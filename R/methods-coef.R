@@ -14,32 +14,20 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
+###############################################################################
 # FUNCTION:             DESCRIPTION REGRESSION METHODS:
-#  vcov.fREG             Returns Covariance from a fitted regression model
-################################################################################
+#  coef.fREG             Returns coefficients from a fitted regression model
+###############################################################################
 
         
-setMethod(f = "vcov", signature(object = "fREG"), definition = 
+setMethod(f = "coef", signature(object = "fREG"), definition = 
     function(object) 
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:  
-    #   Extracts 'fREG' Model Covariance
+    #   Extracts 'fREG' Model Coefficients
     
     # Arguments:
     #   object - an object of class fREG as returned by the function regFit
@@ -47,12 +35,13 @@ setMethod(f = "vcov", signature(object = "fREG"), definition =
     # FUNCTION:
     
     # Numeric vector of fitted values:
-    ans = vcov(object@fit) 
+    ans <- slot(object, "fit")$coef
     
     # Return Value:
     ans
 })
 
 
-################################################################################
+###############################################################################
+
 

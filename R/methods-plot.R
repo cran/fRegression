@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # S3-METHODS:           PLOT METHOD:    
@@ -34,9 +22,9 @@
 #  .plot.rlm              Robust Linear Regression Model internal plot
 #  .plot.glm              Generalized Linear Model internal plot
 #  .plot.gam              Generalized Additive Model internal plot
+#  .plot.nnet             Feedforward Neural Network Model internal plot
 #  .plot.ppr              Projection Pursuit Regression Model internal plot
 #  .plot.polymars         Polytochomous MARS Model internal plot
-#  .plot.nnet             Feedforward Neural Network Model internal plot
 # PLOTS:                DESCRIPTION:
 #  .interactiveRegPlot
 #  .multRegPlot
@@ -117,13 +105,13 @@ setMethod(f = "plot", signature(x = "fREG", y = "missing"), definition =
 # ------------------------------------------------------------------------------
 
 
-.plot.lm <- .plot.common
-.plot.rlm <- .plot.common
-.plot.glm <- .plot.common
-.plot.gam <- .plot.common
-.plot.ppr <- .plot.common
-.plot.nnet <- .plot.common
-.plot.polymars <- .plot.common
+.plot.lm <- function(...) .plot.common(...)
+.plot.rlm <- function(...) .plot.common(...)
+.plot.glm <- function(...) .plot.common(...)
+.plot.gam <- function(...) .plot.common(...)
+.plot.ppr <- function(...) .plot.common(...)
+.plot.nnet <- function(...) .plot.common(...)
+.plot.polymars <- function(...) .plot.common(...)
 
 
 # ------------------------------------------------------------------------------

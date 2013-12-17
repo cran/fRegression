@@ -14,24 +14,11 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA. 
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTIONS:                REGRESSION TERMS:
 #  terms.fREG                Extracts 'fREG' Model Terms
 ################################################################################
-
 
 
 setMethod(f = "terms", signature(x = "fREG"), definition = 
@@ -49,7 +36,7 @@ setMethod(f = "terms", signature(x = "fREG"), definition =
     # FUNCTION:
     
     # Formula:
-    ans = stats::terms(slot(x, "fit"), ...) 
+    ans <- stats::terms(slot(x, "fit"), ...) 
     
     # Return Value:
     ans

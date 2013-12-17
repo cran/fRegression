@@ -1,12 +1,13 @@
-\name{terms-methods}
+\name{termPlot}
 
 
 \docType{methods}
 
 
-\alias{terms-methods}
-\alias{terms,ANY-method}
-\alias{terms,fREG-method}
+% \alias{termPlot-methods}
+% \alias{termPlot,ANY-method}
+
+\alias{termPlot.fREG}
 
 
 \title{Regression Model Plot Methods}
@@ -20,13 +21,13 @@
 
 
 \usage{
-\S4method{terms}{fREG}(x, \dots)
+\method{termPlot}{fREG}(model, \dots)
 }
 
 
 \arguments{
 
-    \item{x}{
+    \item{model}{
         an object of class 'fREG'.
         } 
     \item{\dots}{
@@ -44,7 +45,7 @@
         Generic function.
         }
     \item{x = "fREG"}{
-        Terms extractor function. 
+        Term plot function. 
         }
         
     }
@@ -60,10 +61,10 @@
 
 \examples{
 ## regSim -
-   x = regSim(model = "LM3", n = 50)
+   x <- regSim(model = "LM3", n = 50)
   
 ## regFit -
-   fit = regFit(Y ~ X1 + X2 + X3, data = x, use = "lm")
+   fit <- regFit(Y ~ X1 + X2 + X3, data = x, use = "lm")
 }
 
 

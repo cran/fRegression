@@ -355,7 +355,7 @@ Wood (2001);
 
 \examples{
 ## regSim -
-   x = regSim(model = "LM3", n = 100)
+   x <- regSim(model = "LM3", n = 100)
   
    # LM       
    regFit(Y ~ X1 + X2 + X3, data = x, use = "lm") 
@@ -370,9 +370,7 @@ Wood (2001);
    regFit(Y ~ X1 + X2 + X3, data = x, use = "nnet") 
    
    # POLYMARS
-   if (require(polspline)) {
    regFit(Y ~ X1 + X2 + X3, data = x, use = "polymars")
-   }
 }
 
 

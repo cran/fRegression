@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:             DESCRIPTION REGRESSION METHODS:
@@ -44,16 +32,14 @@ setMethod(f = "predict", signature(object = "fREG"), definition =
     # FUNCTION:
     
     # Fit:
-    fit = object@fit
+    fit <- object@fit
       
     # Data as data.frame:
-    if (missing(newdata)) {
-        newdata = object@data$data
-    }
+    if (missing(newdata)) newdata <- object@data$data
      
     # Predict:
     if (object@method == "nnet" & type == "response") type = "raw"
-    ans = .predict(object = fit, newdata = newdata, se.fit = se.fit, 
+    ans <- .predict(object = fit, newdata = newdata, se.fit = se.fit, 
         type = type, ...) 
     
     # Make the output from 'predict' unique:
@@ -81,26 +67,33 @@ setMethod(f = "predict", signature(object = "fREG"), definition =
 # Note, in the following "object" concerns to the slot @fit:
 
 
-.predict.lm <- predict.lm
+.predict.lm <- function(...) stats::predict.lm(...)
     # <- function (object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
     #    interval = c("none", "confidence", "prediction"), level = 0.95, 
     #    type = c("response", "terms"), terms = NULL, na.action = na.pass, 
     #    pred.var = res.var/weights, weights = 1, ...) 
-.predict.rlm <- predict.lm
+
+.predict.rlm <- function(...) stats::predict.lm(...)
     #
-.predict.glm <- predict.glm
+
+.predict.glm <- function(...) stats::predict.glm(...)
     # <- function (object, newdata = NULL, type = c("link", "response", 
     #    "terms"), se.fit = FALSE, dispersion = NULL, terms = NULL, 
     #    na.action = na.pass, ...) 
-.predict.gam <- predict.gam
+
+.predict.gam <- function(...) mgcv::predict.gam(...)
     # <- function (object, newdata, type = "link", se.fit = FALSE, terms = NULL, 
     #    block.size = 1000, newdata.guaranteed = FALSE, na.action = na.pass, 
     #    ...)  
-.predict.ppr <- function(object, ...) { predict(object, ...) }
+
+.predict.ppr <- function(object, ...) { stats::predict(object, ...) }
     # <- function(object, newdata, ...)
-.predict.nnet <- function(object, ...) { predict(object, ...) }
+
+##.predict.nnet <- function(object, ...) { nnet::predict(object, ...) }
     # <- function(object, newdata, type=c("raw","class"), ...)
-#predict.polymars ---- can be found in polymars.R
+
+##.predict.polspline <- function(object, ...) { polspline::predict(object, ...) }
+    # ---- can be found in polymars.R
     # <- function(object, newdata, se.fit = FALSE, type = "response", ...)
 
 

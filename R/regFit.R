@@ -14,20 +14,8 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
+###############################################################################
 # FUNCTION:             PARAMETER ESTIMATION:
 #  regFit                Wrapper Function for Regression Models
 #  .lmFit                 Linear Regression Model
@@ -37,20 +25,20 @@
 #  .pprFit                Projection Pursuit Regression Model
 #  .nnetFit               Feedforward Neural Network Model
 #  .polymarsFit           Polytochomous MARS Model
-################################################################################
+###############################################################################
 
 
-################################################################################
+###############################################################################
 # MODEL:        PACKAGE     print   plot   summary   print     predict
 #                                    persp           summary
 #   lm          stats       x       x      x         x         x
 #   rlm         MASS
 #   glm         stats       x       -      x         x         x
 #   gam         mgcv        x       x      x         x         x
-#   ppr         modreg      x       x      x         x         x
+#   ppr         stats       x       x      x         x         x
 #   nnet        nnet        x       -      x         x         x
 #   polymars*   polspline   -       xx     x         -         x
-################################################################################
+###############################################################################
 
 
 regFit <-
@@ -84,14 +72,19 @@ regFit <-
     # FUNCTION:
 
     # Match Arguments:
-    use = match.arg(use)
+    use <- match.arg(use)
+    if (missing(data)) data <- NULL
 
     # Transform data into a dataframe
-    Data <- if (inherits(data, "timeSeries")) data else as.timeSeries(data)
-    data = as.data.frame(data)
+    if (!is.null(data)) {
+      Data <- if (inherits(data, "timeSeries")) data else as.timeSeries(data)
+      data <- as.data.frame(data)
+    } else {
+      Data <- data <- NULL
+    }
 
     # Function to be called:
-    fun = paste(".", match.arg(use), sep = "")
+    fun <- paste(".", match.arg(use), sep = "")
 
     # Title:
     if (is.null(title)) {
@@ -105,36 +98,40 @@ regFit <-
     }
 
     # Description:
-    if (is.null(description)) {
-        description = description()
-    }
+    if (is.null(description)) description = description()
 
     # Compose Command to be Called:
-    cmd = match.call()
+    cmd <- match.call()
     if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]
     cmd[[1]] <- as.name(fun)
+    # Use this to access hidden functions in a parent frame:
+    #cmd[[1]] <- substitute(fRegression:::f, list(f=as.name(fun)))
 
     # Ensure that data is a data.frame
-    if (!is.null(cmd$data)) cmd$data <- call("as.data.frame", cmd$data)
+    if (!is.null(cmd$data)) cmd$data <- as.name("data")
+    # Use this to directly pass the argument from the parent frame:
+    #if (!is.null(cmd$data)) cmd$data <- call("as.data.frame", cmd$data)
 
     # Fit Regression Model:
-    fit <- eval(cmd, parent.frame())
+    fit <- eval(cmd)
+    # Use this to evaluate in parent frame:
+    #fit <- eval(cmd, parent.frame())
 
     # Add "cmd" to Fit:
-    fit$cmd = cmd
+    fit$cmd <- cmd
 
     # Add "xlevels" to Fit (if missing):
     if (is.null(fit$xlevels)) fit$xlevels = list()
 
     # Add "residuals" and "fitted" to Fit (to be sure ...):
-    fit$residuals = as.vector(fit$residuals)
-    fit$fitted.values = as.vector(fit$fitted.values)
+    fit$residuals <- as.vector(fit$residuals)
+    fit$fitted.values <- as.vector(fit$fitted.values)
 
     # Add "parameters" as Alternative:
-    fit$parameters = fit$coef
+    fit$parameters <- fit$coef
 
     # Extend to class "list":
-    class(fit) = c("list", class(fit))
+    class(fit) <- c("list", class(fit))
     if (!inherits(fit, "lm")) class(fit) = c(class(fit), "lm")
 
     # Return Value:
@@ -143,7 +140,7 @@ regFit <-
         formula = as.formula(formula),
         family = as.character(gaussian()),
         method = use,
-        # data is data.frame, Data original input:
+        # data is as.data.frame(data), Data is as.timeSeries(data):
         data = list(data = data, Data = Data),
         fit = fit,
         residuals = fit$residuals,
@@ -154,19 +151,76 @@ regFit <-
 }
 
 
-# ------------------------------------------------------------------------------
+###############################################################################
 
 
-.lm <- stats::lm
-.rlm <- MASS::rlm
-.glm <- stats::glm
-.gam <- mgcv::gam
-.ppr <- function(..., nterms = 2)
-    stats::ppr(..., nterms = nterms)
-.nnet <- function(..., trace = FALSE, size = 2, linout = TRUE)
-    nnet::nnet(..., trace = trace, size = size, linout = linout)
-.polymars <- .polymarsFormula
+.lm <- 
+  function(...)
+{
+  stats::lm(...)
+}
 
 
-################################################################################
+# -----------------------------------------------------------------------------
+
+
+.rlm <- 
+  function(...)
+{
+  MASS::rlm(...)
+}
+
+
+# -----------------------------------------------------------------------------
+
+
+.glm <- 
+  function(...)
+{
+  stats::glm(...)
+}
+
+
+# -----------------------------------------------------------------------------
+
+
+.gam <- 
+  function(...)
+{
+  mgcv::gam(...)
+}
+
+
+# -----------------------------------------------------------------------------
+
+
+.ppr <- 
+  function(..., nterms = 2)
+{
+  stats::ppr(..., nterms = nterms)
+}
+
+
+# -----------------------------------------------------------------------------
+
+
+.nnet <- 
+  function(..., trace = FALSE, size = 2, linout = TRUE)
+{
+  nnet::nnet(..., trace = trace, size = size, linout = linout)
+}
+
+
+# -----------------------------------------------------------------------------
+
+
+.polymars <- 
+  function(...) 
+{
+  .polymarsFormula(...)
+}
+
+
+###############################################################################
+
 

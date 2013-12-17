@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
@@ -44,7 +32,7 @@ setMethod(f = "summary", signature(object = "fREG"), definition =
     # FUNCTION:
 
     # Digits:
-    digits = max(4, getOption("digits") - 4)
+    digits <- max(4, getOption("digits") - 4)
 
     # Print all from print Method:
     print(object)
@@ -54,8 +42,8 @@ setMethod(f = "summary", signature(object = "fREG"), definition =
     cat("\n\n")
 
     # Internal Function: fResiduals
-    fResiduals =
-    function(x, digits)
+    fResiduals <-
+        function(x, digits)
     {
         cat("Non-Weighted Residuals:\n")
         names = c("Min", "1Q", "Median", "3Q", "Max")
@@ -73,8 +61,8 @@ setMethod(f = "summary", signature(object = "fREG"), definition =
     }
 
     # Internal Function: print.summary.LM
-    print.summary.LM =
-    function (x, ...)
+    print.summary.LM <- 
+        function (x, ...)
     {
         digits = max(4, getOption("digits") - 4)
         symbolic.cor = x$symbolic.cor
@@ -250,40 +238,40 @@ setMethod(f = "summary", signature(object = "fREG"), definition =
     }
 
     # Fit:
-    fit = object@fit
+    fit <- object@fit
 
     # Regression Model: LM
     if (object@method == "lm") {
         class(fit) = "lm"
-        ans = summary.lm(object = fit, ...)
+        ans <- stats::summary.lm(object = fit, ...)
         print.summary.LM(x = ans, ...)
     }
 
     # Regression Model: GLM
     if (object@method == "glm") {
         class(fit) = c("glm", "lm")
-        ans = summary.glm(object = fit, ...)
+        ans <- stats::summary.glm(object = fit, ...)
         print.summary.GLM(x = ans, ...)
     }
 
     # Regression Model: GAM
     if (object@method == "gam") {
         class(fit) = "gam"
-        ans = summary.gam(object = fit, ...)
+        ans <- mgcv::summary.gam(object = fit, ...)
         print.summary.GAM(x = ans, ...)
     }
 
     # Regression Model: PPR
     if (object@method == "ppr") {
         # This is what print.ppr produces.
-        mu = fit$mu; ml = fit$ml
+        mu <- fit$mu; ml = fit$ml
         cat("Goodness of fit:\n")
-        gof = fit$gofn; names(gof) = paste(1:ml, "terms")
+        gof <- fit$gofn; names(gof) = paste(1:ml, "terms")
         print(format(gof[mu:ml], ...), quote = FALSE)
         # This is what summary.ppr produces.
         if (any(fit$edf > 0)) {
             cat("\nEquivalent df for ridge terms:\n")
-            edf = fit$edf
+            edf <- fit$edf
             names(edf) = paste("term", 1:fit$mu)
             print(round(edf, 2), ...)}
     }

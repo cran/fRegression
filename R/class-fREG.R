@@ -6,7 +6,7 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Library General Public License for more details.
 #
 # You should have received a copy of the GNU Library General
@@ -15,25 +15,27 @@
 # MA  02111-1307  USA
 
 
-###########################\#####################################################
+################################################################################
+# FUNCTION:               DESCRIPTION:
+#  'fREG'                  fREG Class representation
+###############################################################################
 
 
-test.Fit <- 
-    function()
-{   
-    # Simulate Artificial LM:
-    x <- as.timeSeries(data(LPP2005REC))
-    
-    # Fit Parameters:
-    lmfit <- regFit(LPP40 ~ 0 + SPI + SBI + SII + LMI + MPI + ALT, 
-        data = x, use = "lm") 
-    
-    # 
-    print(lmfit)
- 
-    # Return Value:
-    return()
-}
+setClass("fREG", 
+    # Class Representation
+    representation(
+        call = "call",
+        formula = "formula",
+        family = "character",  
+        method = "character",
+        data = "list",
+        fit = "list",
+        residuals = "numeric",
+        fitted = "numeric",
+        title = "character",
+        description = "character"
+    )  
+)
 
 
 ###############################################################################

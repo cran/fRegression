@@ -14,23 +14,11 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
+###############################################################################
 # FUNCTION:             DESCRIPTION REGRESSION METHODS:
 #  formula.fREG          Returns formula from a fitted regression model
-################################################################################
+###############################################################################
 
         
 setMethod(f = "formula", signature(x = "fREG"), definition = 
@@ -48,12 +36,13 @@ setMethod(f = "formula", signature(x = "fREG"), definition =
     # FUNCTION:
     
     # Formula:
-    ans = slot(x, "formula") 
+    ans <- slot(x, "formula") 
     
     # Return Value:
     ans
 })
 
 
-################################################################################
+###############################################################################
+
 
