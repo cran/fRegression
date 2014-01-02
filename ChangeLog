@@ -1,3 +1,15 @@
+2014-01-02  chalabi
+
+	* DESCRIPTION, NAMESPACE, R/polymars.R,
+	  inst/unitTests/runit.RegressionModelling.R,
+	  inst/unitTests/runit.TermPlots.R: Using quote instead of as.name
+	  when calling polymars().
+
+2013-12-17  chalabi
+
+	* ChangeLog, DESCRIPTION, NAMESPACE: updated DESC and ChangeLog
+	* DESCRIPTION: updated DESC
+
 2013-12-10  chalabi
 
 	* ChangeLog, DESCRIPTION:

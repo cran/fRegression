@@ -1,6 +1,6 @@
-23bb2c58c66673f8d8e19605573f2747 *ChangeLog
-62b9e4399184e1984dfdaa65cc446af3 *DESCRIPTION
-cf35c61c7ea964205f38b3527c1f67eb *NAMESPACE
+93d0006ec0ad45d5334ec471f69ab506 *ChangeLog
+8d1cbd626763da22a58823952f0912d5 *DESCRIPTION
+1ef9032ea8e2291bf150674ba4835a0b *NAMESPACE
 056fea650d95be1831ed8667a3950b45 *R/coef-methods.R
 c54e44657bcce48c23025b791e89216c *R/fREG-class.R
 b8be22a72a84547d77ad6c00fe67e253 *R/fitted-methods.R
@@ -8,7 +8,7 @@ b8be22a72a84547d77ad6c00fe67e253 *R/fitted-methods.R
 199ff1af7fc5fb934b2de5461a680e78 *R/formula-methods.R
 41ca512e43584d9705dd3ade4fc2d001 *R/lmTest.R
 274ac3661cc14dda15d3d04c382cf6b0 *R/plot-methods.R
-e25a42805248228addb2d06940fe97df *R/polymars.R
+b5d461177a1274f5531bf1330531f332 *R/polymars.R
 b46ac3382cebfbef6057931c8ff318d0 *R/predict-methods.R
 209471fa77dcbac773e5adb001067cfe *R/regFit.R
 241267f9bbdc5bca0b4f3a8abfbb0750 *R/regSim.R
@@ -23,8 +23,8 @@ e3ac35e5c846b78cc60cdeaf5b9e143b *R/zzz.R
 5f16a6861f06eddcf85d0a26ef916d6d *inst/unitTests/Makefile
 8e6c3efa2d826d92c1d21a95432e7c20 *inst/unitTests/runTests.R
 0915fb7e8c2a5554e422038af29866ea *inst/unitTests/runit.LPP2005.R
-e5eec90045891caa05ee83809c3c745c *inst/unitTests/runit.RegressionModelling.R
-5d6b6b6d5f475af3e5a1e645c4b3ce87 *inst/unitTests/runit.TermPlots.R
+fd8567bf638bb964f41c5317e9e69fa0 *inst/unitTests/runit.RegressionModelling.R
+45948e5a58c3edcf29326d3a92168436 *inst/unitTests/runit.TermPlots.R
 cd13f953fd7aed4217642f9f678d6e32 *inst/unitTests/runit.TimeSeries.R
 ae2b3aafed56f5b77af30089cb7bb521 *inst/unitTests/runit.polymars.R
 19dcf37d9175424792dc38559eca53b6 *inst/unitTests/runit.regFit.R
@@ -48,4 +48,5 @@ c912dfe0b8d81577309779ac220a708f *man/vcov-methods.Rd
 7ba97abe7e0c4c5b73583d0ce48e7cbb *src/LmTests.f
 3996e7c16bfb96fad295ee425815cb4d *src/Makevars
 624e949f55eafa4911000ea92736445e *src/MarsModelling.f
+409902a73d370a8c7648e713011e94bc *tests/Rplots.pdf
 ca566e590ec30abd0718c5375e1a446f *tests/doRUnit.R
