@@ -1,6 +1,6 @@
 cc4418312d4b2ce54cf897b82d4096f7 *ChangeLog
-63c45235c2a6c6c1250dc43f37b3f87d *DESCRIPTION
-7313b122215850e10cb1cdb0153c20e0 *NAMESPACE
+d3ec038491fbf707f9e6e600e8378cfd *DESCRIPTION
+da6d87dfbfc9a757dbf9be8d70932cf9 *NAMESPACE
 7f0d16d0cd6a95d5bb7c035cbe64409a *R/class-fREG.R
 edc4f4f056297f1517ade97632ab55a1 *R/fittedPlot.R
 98ecd4a0475893310caae84e681d73cf *R/methods-coef.R
@@ -18,11 +18,11 @@ c68c8046cb7d94429f074d027c926ec0 *R/methods-terms.R
 07409ab1901a6ccb33292eaffdcdbc31 *R/regSim.R
 ff9d0b0dadeb4ce6c51b3a7c838f295a *R/wrapper-lmTest.R
 2f2812f19d9138b10041e52f8132a727 *R/wrapper-polymars.R
-9fb7b45ec8093cd2f80891c01c08382e *R/zzz.R
+d6ecdf8b77fd765859ee52cd877cc7ec *R/zzz.R
 7ba97abe7e0c4c5b73583d0ce48e7cbb *inst/obsolete/src/LmTests.f
 3996e7c16bfb96fad295ee425815cb4d *inst/obsolete/src/Makevars
 b6b956f0b232f76bd8ab218e49e8a489 *inst/obsolete/src/MarsModelling.f
-5f16a6861f06eddcf85d0a26ef916d6d *inst/unitTests/Makefile
+4e26e087259af5a81c393bb801e685be *inst/unitTests/Makefile
 adef1981ff382526f364675d7e8068cf *inst/unitTests/runTests.R
 4b752fcbcc17ee4e790f8faed6872018 *inst/unitTests/runit.LPP2005.R
 5b9714427955481bab0000fbef4d4fcf *inst/unitTests/runit.RegressionModelling.R
